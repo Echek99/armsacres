@@ -1,15 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '*'
+        hostname: '**', // Allow all subdomains
       }
     ]
   },
+  output: 'standalone', // Optimize for serverless
 };
 
 export default nextConfig;
