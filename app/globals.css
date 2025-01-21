@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Mercadillo';
+  src: url('/fonts/Mercadillo-Black.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@layer base {
+  :root {
+      --radius: 0.5rem;
+      background-color: #FDFEFE;
+  }
+}
+
+@layer utilities {
+  .titles {
+    /* background: -webkit-linear-gradient(#00BE21, #D8E400);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; */
+    font-family: 'Mercadillo';
+    -webkit-text-stroke: #000 2px;
+    color: #fff;
+  }
+  .links {
+    font-family: "Oswald", serif;
+  }
+  .mercadillo {
+    font-family: 'Mercadillo';
+  }
+  .oswald {
+    font-family: "Oswald", serif;
+  }
+  .carousel-container{
+    @media screen and (min-width:320px) and (max-width: 768px) {
+      max-width: 275px;
+    }
+    max-width: auto;
+  }
+}
