@@ -17,7 +17,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "#1 Weed Delivery New York & New Jersey | Same Day Delivery | Armsacres",
   description: "The Best Weed Delivery in NY and NJ, with over 15 years of experience on the bussiness | Premium Cannabis Delivery | +1 (347) 935-4383",
-  
 };
 
 export default function RootLayout({
@@ -33,7 +32,7 @@ export default function RootLayout({
         <NavBar />
         {children}
         <Footer />
-      </body>
+      </body>                                              
     </html>
   );
 }
