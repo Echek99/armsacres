@@ -1,5 +1,3 @@
-// app/[categorySlug]/[productSlug]/page.tsx
-
 import { PRODUCTS_QUERY } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { type SanityDocument } from "next-sanity";
@@ -8,18 +6,15 @@ import Image from "next/image";
 
 const options = { next: { revalidate: 3600 } };
 
-export default async function ProductPage({
-  params,
-}: {
-  params: { categorySlug: string; productSlug: string };
-}) {
+// Explicitly define the type for dynamic route params
+
+export default async function ProductPage({ params } : {params: {slug: string, productSlug: string}}) {
   // Fetch categories and products
   const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);
 
   // Find the product based on category and product slug
   const product = products.find(
-    (product) =>
-      product.slug.current === params.productSlug
+    (product) => product.slug.current === params.productSlug
   );
 
   if (!product) {
@@ -54,23 +49,19 @@ export default async function ProductPage({
             <p className="italic oswald text-gray-500">{product.category.title}</p>
             <h1 className="text-4xl uppercase font-bold titles">{product.title}</h1>
           </div>
-          {product.additionalInfo ?
-            <p className={
-              product?.additionalInfo.strain === 'Sativa' ?
-                'bg-yellow-500 text-white p-1.5 w-min rounded font-bold oswald uppercase'
-                :
-                'bg-purple-500 text-white p-1.5 w-min rounded font-bold oswald uppercase'
-            }>
+          {product.additionalInfo ? (
+            <p
+              className={
+                product?.additionalInfo.strain === "Sativa"
+                  ? "bg-yellow-500 text-white p-1.5 w-min rounded font-bold oswald uppercase"
+                  : "bg-purple-500 text-white p-1.5 w-min rounded font-bold oswald uppercase"
+              }
+            >
               {product?.additionalInfo.strain}
             </p>
-            :
+          ) : (
             <></>
-          }
-          <p className="text-2xl font-semibold oswald">${product.price}</p>
-          <p className="text-xl mb-4">{product.description}</p>
-          <Link className="text-blue-500 hover:underline oswald" href={`/${product.category.slug.current}`}>
-            Back to Category
-          </Link>
+          )}
         </div>
       </div>
     </div>

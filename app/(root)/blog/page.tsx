@@ -3,7 +3,6 @@ import { client } from "@/sanity/lib/client";
 import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
-import { PortableText } from '@portabletext/react';
 import { toPlainText } from '@portabletext/react';
 
 const options = { next: { revalidate: 3600 } };

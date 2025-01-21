@@ -13,7 +13,8 @@ const AboutUs = () => {
                     we are your trusted source for premium cannabis products. <br />
                     Every item in our collection is carefully selected and tested for
                     potency and purity, ensuring the highest quality.
-                    Whether you're in the heart of New York or New Jersey, experience the convenience of having exceptional
+                    Whether you`&apos;`re in the heart of New York or New Jersey, 
+                    experience the convenience of having exceptional
                     weed delivered right to your door. <br />
                     Armsacres is where quality and convenience meet.
                 </p>

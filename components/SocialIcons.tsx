@@ -1,4 +1,4 @@
-import { faTelegram, faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons"
+import { faTelegram, faWhatsapp } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Phone } from "lucide-react"
 

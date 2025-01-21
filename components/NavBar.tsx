@@ -4,7 +4,7 @@ import Image from "next/image"
 import { Search, Menu, X } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 
-const NavBar = ({ scrollOffset = 400 }) => {
+const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
     const headerRef = useRef<HTMLDivElement>(null);
