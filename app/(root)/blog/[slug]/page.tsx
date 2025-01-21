@@ -5,8 +5,9 @@ import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 
 const options = { next: { revalidate: 3600 } };
+export type paramsType = Promise<{ slug: string }>;
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage( props : {params: paramsType}) {
   const query = `*[_type == "blog" && slug.current == $slug][0]{
     _id,
     title,
@@ -25,8 +26,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
       }
     }
   }`;
+  const {slug} = await props.params
 
-  const blog = await client.fetch<SanityDocument>(query, { slug: params.slug }, options);
+
+  const blog = await client.fetch<SanityDocument>(query, { slug: slug }, options);
 
   if (!blog) {
     return <div className="text-center text-xl mt-10">Blog post not found</div>;

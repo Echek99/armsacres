@@ -7,14 +7,17 @@ import Image from "next/image";
 const options = { next: { revalidate: 3600 } };
 
 // Explicitly define the type for dynamic route params
+export type paramsType = Promise<{ productSlug: string }>;
 
-export default async function ProductPage({ params } : {params: {slug: string, productSlug: string}}) {
+export default async function ProductPage(props: {params: paramsType}) {
+
+  const {productSlug} = await props.params
   // Fetch categories and products
   const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);
 
   // Find the product based on category and product slug
   const product = products.find(
-    (product) => product.slug.current === params.productSlug
+    (product) => product.slug === productSlug
   );
 
   if (!product) {

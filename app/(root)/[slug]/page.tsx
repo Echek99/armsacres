@@ -7,18 +7,16 @@ import Link from "next/link"
 import FeaturedCard from "@/components/FeaturedCard";
 
 const options = { next: { revalidate: 3600 } };
+export type paramsType = Promise<{ slug: string }>;
 
-export default async function CategoryPage({
-    params,
-}: {
-    params: { slug: string };
-}) {
+export default async function CategoryPage(props: {params: paramsType}) {
     // Fetch categories and products (two separate queries)
     const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
     const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);
+    const {slug} = await props.params;
 
     // Find the category based on the slug
-    const category = categories.find((e) => e.slug.current === params.slug);
+    const category = categories.find((e) => e.slug.current === slug);
 
     if (!category) {
         return (
@@ -33,7 +31,7 @@ export default async function CategoryPage({
 
     // Filter products by category slug
     const filteredProducts = products.filter(
-        (product) => product.category?.slug?.current === params.slug
+        (product) => product.category?.slug?.current === slug
     );
 
     return (
