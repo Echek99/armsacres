@@ -1,4 +1,3 @@
-import { PRODUCTS_QUERY } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
@@ -11,16 +10,16 @@ export type paramsType = Promise<{ productSlug: string }>;
 
 // Define the query to fetch a single product by its slug
 const query = `*[_type == "product" && slug.current == $slug][0]{
-  _id,
-  title,
-  category->{
     title,
-    slug
-  },
-  "imageUrl": image.asset->url,
-  "imageAlt": image.alt,
-  price,
-  additionalInfo
+    slug,
+    "imageUrl": image.asset->url,
+    price,
+    category->{
+      slug,
+      title
+    },
+    description,
+    additionalInfo
 }`;
 
 export default async function ProductPage(props: {params: paramsType}) {
@@ -48,7 +47,7 @@ export default async function ProductPage(props: {params: paramsType}) {
           {product.imageUrl && (
             <Image
               src={product.imageUrl}
-              alt={product.imageAlt || product.title}
+              alt={`${product.title} cover`}
               width={500}
               height={500}
               className="rounded-lg shadow-lg"
