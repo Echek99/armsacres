@@ -4,12 +4,12 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**', // Allow all subdomains
-      }
-    ]
+        protocol: "https",
+        hostname: "**", // Allows all subdomains, more reliable than '*'
+      },
+    ],
   },
-  output: 'standalone', // Optimize for serverless
+  output: "standalone", // Ensure compatibility with Netlify
 };
 
 export default nextConfig;
