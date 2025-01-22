@@ -34,7 +34,7 @@ const NavBar = () => {
                     </Link>
                     <div className="lg:hidden">
                         <button onClick={toggleMenu} className="text-black">
-                            {isMenuOpen ? <></> : <Menu size={24} />}
+                            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
                     </div>
                     <div className="hidden lg:flex items-center space-x-6">
@@ -65,14 +65,14 @@ const NavBar = () => {
                     isSticky ? 'translate-y-0' : '-translate-y-full'
                 }`}
             >
-                <header className="py-4 px-8 w-full min-h-[75px]">
+                <header className="py-4 px-8 w-full min-h-[100px]">
                     <nav className="flex justify-between items-center w-full lg:w-2/3 mx-auto">
                         <Link href="/" className="mr-5">
                             <Image src="/logo.png" alt="Logo" width={225} height={75} />
                         </Link>
                         <div className="lg:hidden">
                             <button onClick={toggleMenu} className="text-black">
-                                {isMenuOpen ? <></> : <Menu size={24} />}
+                                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                             </button>
                         </div>
                         <div className="hidden lg:flex items-center space-x-6">
