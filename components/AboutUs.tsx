@@ -18,7 +18,7 @@ const AboutUs = () => {
                     weed delivered right to your door. <br />
                     Armsacres is where quality and convenience meet.                </p>
                 <Image
-                    src="https://cdn.discordapp.com/attachments/943731493346369576/1327649669236392088/Pink-Red-Love-Map-Instagram-Post-Square-15-e1710206305166-1024x409.png?ex=6783d59b&is=6782841b&hm=3432b1c20ed6e26af882355caa036d9d0b4154c6aed098220d3dd61b0653d559&"
+                    src="/bags-armsacres.png"
                     alt="Refer and Earn"
                     width={600}
                     height={200}

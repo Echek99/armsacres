@@ -11,7 +11,7 @@ const ReferralProgram = () => {
                     It’s our way of saying thank you for spreading the word!
                 </p>
                 <Image
-                    src="https://cdn.discordapp.com/attachments/943731493346369576/1327452724580847616/logo_2.png?ex=67831e30&is=6781ccb0&hm=cbb45c46d7f5ce56add7a1e76e2c8c67976b675b00f76edf9534ae39adc7bb32&"
+                    src="/referral-program.png"
                     alt="Refer and Earn"
                     width={650}
                     height={200}
