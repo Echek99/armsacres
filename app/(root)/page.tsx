@@ -6,6 +6,7 @@ import NewStrainsCarousel from "@/components/NewStrainsCarousel";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import AboutUs from "@/components/AboutUs";
 import Places from "@/components/Places";
+import { SanityLive } from "@/sanity/lib/live";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
         <AboutUs />
         <FeaturedProducts />
         <Places />
+        <SanityLive />
       </section>
     </>
   );
