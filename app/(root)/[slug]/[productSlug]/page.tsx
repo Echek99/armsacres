@@ -9,16 +9,25 @@ const options = { next: { revalidate: 3600 } };
 // Explicitly define the type for dynamic route params
 export type paramsType = Promise<{ productSlug: string }>;
 
+// Define the query to fetch a single product by its slug
+const query = `*[_type == "product" && slug.current == $slug][0]{
+  _id,
+  title,
+  category->{
+    title,
+    slug
+  },
+  "imageUrl": image.asset->url,
+  "imageAlt": image.alt,
+  price,
+  additionalInfo
+}`;
+
 export default async function ProductPage(props: {params: paramsType}) {
+  const { productSlug } = await props.params;
 
-  const {productSlug} = await props.params
-  // Fetch categories and products
-  const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);
-
-  // Find the product based on category and product slug
-  const product = products.find(
-    (product) => product.slug === productSlug
-  );
+  // Fetch the product data based on the slug
+  const product = await client.fetch<SanityDocument>(query, { slug: productSlug }, options);
 
   if (!product) {
     return <div className="text-center text-xl mt-10">Product not found</div>;
@@ -39,7 +48,7 @@ export default async function ProductPage(props: {params: paramsType}) {
           {product.imageUrl && (
             <Image
               src={product.imageUrl}
-              alt={product.title}
+              alt={product.imageAlt || product.title}
               width={500}
               height={500}
               className="rounded-lg shadow-lg"

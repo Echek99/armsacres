@@ -5,8 +5,8 @@ import Link from "next/link"
 const Footer = () => {
     return (
         <footer className="border-t-2 border-black bg-black text-white py-10 flex flex-col lg:flex-row items-center justify-center relative w-full">
-            <div className="flex flex-col items-center lg:items-start mb-6 lg:mb-0">
-                <Image src="/fullLogo.png" alt="Logo" width={225} height={75} />
+            <div className="flex flex-col items-center justify-center mb-6 lg:mb-0">
+                <Image src="/fullLogo.png" alt="Logo" width={225} height={75} className="mx-auto"/>
                 <SocialIcons />
             </div>
             <div className="flex flex-col lg:flex-row flex-wrap items-center justify-center w-full lg:w-auto">

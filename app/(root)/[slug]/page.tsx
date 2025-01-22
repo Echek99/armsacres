@@ -3,17 +3,17 @@
 import { CATEGORIES_QUERY, PRODUCTS_QUERY } from "@/sanity/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { type SanityDocument } from "next-sanity";
-import Link from "next/link"
+import Link from "next/link";
 import FeaturedCard from "@/components/FeaturedCard";
 
 const options = { next: { revalidate: 3600 } };
 export type paramsType = Promise<{ slug: string }>;
 
-export default async function CategoryPage(props: {params: paramsType}) {
+const page = async (props: { params: paramsType }) => {
     // Fetch categories and products (two separate queries)
     const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
     const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);
-    const {slug} = await props.params;
+    const { slug } = await props.params;
 
     // Find the category based on the slug
     const category = categories.find((e) => e.slug.current === slug);
@@ -35,7 +35,7 @@ export default async function CategoryPage(props: {params: paramsType}) {
     );
 
     return (
-        <div className="container mx-auto min-h-screen  p-8 flex flex-col gap-4">
+        <div className="container mx-auto min-h-screen p-8 flex flex-col gap-4">
             <Link href="/" className="hover:underline oswald">
                 ← Back to Homepage
             </Link>
@@ -52,4 +52,6 @@ export default async function CategoryPage(props: {params: paramsType}) {
             </div>
         </div>
     );
-}
+};
+
+export default page;
