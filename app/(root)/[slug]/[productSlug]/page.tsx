@@ -3,7 +3,7 @@ import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
 
-const options = { next: { revalidate: 3600 } };
+const options = { next: { revalidate: 30 } };
 
 // Explicitly define the type for dynamic route params
 export type paramsType = Promise<{ productSlug: string }>;
@@ -16,13 +16,14 @@ const query = `*[_type == "product" && slug.current == $slug][0]{
     price,
     category->{
       slug,
-      title
+      title,
+      categoryDeal
     },
     description,
-    additionalInfo
+    additionalInfo,
 }`;
 
-export default async function ProductPage(props: {params: paramsType}) {
+export default async function ProductPage(props: { params: paramsType }) {
   const { productSlug } = await props.params;
 
   // Fetch the product data based on the slug
@@ -42,7 +43,10 @@ export default async function ProductPage(props: {params: paramsType}) {
           {/* Category title and product title for small screens */}
           <div className="block lg:hidden">
             <p className="italic oswald text-gray-500">{product.category.title}</p>
-            <h1 className="text-4xl uppercase font-bold mb-4 titles">{product.title}</h1>
+            <h1 className="text-4xl uppercase font-bold titles">{product.title}</h1>
+            <div className="flex align-center">
+            <p className="oswald text-2xl mb-4 text-gray-700">${product.price} - {product.category.categoryDeal}</p>
+            </div>
           </div>
           {product.imageUrl && (
             <Image
@@ -59,6 +63,7 @@ export default async function ProductPage(props: {params: paramsType}) {
           <div className="hidden lg:block relative">
             <p className="italic oswald text-gray-500">{product.category.title}</p>
             <h1 className="text-4xl uppercase font-bold titles">{product.title}</h1>
+            <p className="oswald text-2xl mb-4 text-gray-700">${product.price} - {product.category.categoryDeal}</p>
           </div>
           {product.additionalInfo ? (
             <p
@@ -73,8 +78,11 @@ export default async function ProductPage(props: {params: paramsType}) {
           ) : (
             <></>
           )}
+          {/* Safely render the description */}
+          <div dangerouslySetInnerHTML={{ __html: product.description }} className="product-description mt-10" />
         </div>
       </div>
     </div>
   );
 }
+``

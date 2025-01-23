@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,9 +20,6 @@
 
 @layer utilities {
   .titles {
-    /* background: -webkit-linear-gradient(#00BE21, #D8E400);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; */
     font-family: 'Mercadillo';
     -webkit-text-stroke: #000 2px;
     color: #fff;
@@ -42,5 +38,47 @@
       max-width: 275px;
     }
     max-width: auto;
+  }
+  .product-description {
+    h2 {
+      font-size: 1.7rem; /* Large font size for h2 */
+      font-family: "Oswald", serif;
+      margin-bottom: 0.5rem;
+      @media (min-width: 768px) {
+        font-size: 2rem; /* Larger font size for h2 on larger screens */
+      }
+    }
+    h3 {
+      font-size: 1.3rem; /* Medium font size for h3 */
+      font-family: "Oswald", serif;
+      margin-bottom: 0.5rem;
+      @media (min-width: 768px) {
+        font-size: 1.75rem; /* Larger font size for h3 on larger screens */
+      }
+    }
+    p {
+      font-size: 1.2rem; /* Default font size for p */
+      font-family: "Oswald", serif;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+      @media (min-width: 768px) {
+        font-size: 1.125rem; /* Slightly larger font size for p on larger screens */
+      }
+      font-weight: 300;
+    }
+    ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+      li {
+        font-size: 1rem; /* Default font size for li */
+        font-family: "Oswald", serif;
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+        @media (min-width: 768px) {
+          font-size: 1.125rem; /* Slightly larger font size for li on larger screens */
+        }
+      }
+    }
   }
 }

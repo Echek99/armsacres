@@ -28,6 +28,11 @@ export const category = defineType({
       description: 'A brief description of this category (optional).',
     }),
     defineField({
+      name: 'categoryDeal',
+      type: 'string',
+      title: 'CategoryDeal',
+    }),
+    defineField({
       name: 'image',
       type: 'image',
       title: 'Category Image',

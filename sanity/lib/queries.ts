@@ -6,7 +6,8 @@ export const CATEGORIES_QUERY = defineQuery(`
     title,
     slug,
     "imageUrl": image.asset->url,
-    description
+    description,
+    categoryDeal
   }
 `)
 
@@ -18,7 +19,8 @@ export const PRODUCTS_QUERY = defineQuery(`
     price,
     category->{
       slug,
-      title
+      title,
+      categoryDeal
     },
     description,
     additionalInfo

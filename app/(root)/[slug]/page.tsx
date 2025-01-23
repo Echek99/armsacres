@@ -42,6 +42,7 @@ const page = async (props: { params: paramsType }) => {
             <div className="prose oswald font-thin text-xl">
                 <h1 className="text-5xl font-bold uppercase titles mt-5 mb-2">{category.title}</h1>
                 <p>{category.description}</p>
+                <p>{category.categoryDeal}</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {filteredProducts.map((product) => {
