@@ -85,4 +85,3 @@ export default async function ProductPage(props: { params: paramsType }) {
     </div>
   );
 }
-``
