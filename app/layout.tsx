@@ -15,9 +15,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "#1 Weed Delivery New York & New Jersey | Same Day Delivery | Armsacres",
-  description: "The Best Weed Delivery in NY and NJ, with over 15 years of experience on the bussiness | Premium Cannabis Delivery | +1 (347) 935-4383",
+  title: "Weed Delivery NYC & NJ | Armsacres",
+  description: "Get premium cannabis products delivered fast in NYC & NJ. Browse our selection of vapes, edibles, pre-rolls, and more!",
+  openGraph: {
+    title: "Weed Delivery NYC & NJ | Armsacres",
+    description: "Fast & discreet cannabis delivery in NYC & NJ. Shop high-quality weed products now!",
+    url: "https://armsacres.io",
+    siteName: "Armsacres",
+    images: [
+      {
+        url: "https://armsacres.io/banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Weed Delivery NYC & NJ",
+      },
+    ],
+    type: "website",
+  },
 };
+
 
 export default function RootLayout({
   children,

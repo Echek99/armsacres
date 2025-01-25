@@ -2,11 +2,9 @@ import { client } from "@/sanity/lib/client";
 import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
 
 const options = { next: { revalidate: 3600 } };
-
-// Explicitly define the type for dynamic route params
-export type paramsType = Promise<{ productSlug: string }>;
 
 // Define the query to fetch a single product by its slug
 const query = `*[_type == "product" && slug.current == $slug][0]{
@@ -26,10 +24,45 @@ const query = `*[_type == "product" && slug.current == $slug][0]{
     },
 }`;
 
-export default async function ProductPage(props: { params: paramsType }) {
-  const { productSlug } = await props.params;
+// Explicitly define the type for dynamic route params
+export type paramsType = { params: { slug: string; productSlug: string } };
 
-  // Fetch the product data based on the slug
+// Function to dynamically generate metadata
+export async function generateMetadata({ params }: paramsType): Promise<Metadata> {
+  const { productSlug } = params;
+  const product = await client.fetch<SanityDocument>(query, { slug: productSlug }, options);
+
+  if (!product) {
+    return {
+      title: "Product Not Found | Armsacres",
+      description: "This product does not exist or is unavailable at the moment.",
+    };
+  }
+
+  return {
+    title: `${product.title} | ${product.category.title} | Weed Delivery NYC & NJ`,
+    description: product.description
+      ? product.description.substring(0, 150) + "..."
+      : "Discover premium cannabis products available for delivery in NYC and NJ.",
+    openGraph: {
+      title: `${product.title} | ${product.category.title} | Weed Delivery NYC & NJ`,
+      description: product.description
+        ? product.description.substring(0, 150) + "..."
+        : "Discover premium cannabis products available for delivery in NYC and NJ.",
+      images: [
+        {
+          url: product.imageUrl,
+          width: 800,
+          height: 600,
+          alt: product.title,
+        },
+      ],
+    },
+  };
+}
+
+export default async function ProductPage({ params }: paramsType) {
+  const { productSlug } = params;
   const product = await client.fetch<SanityDocument>(query, { slug: productSlug }, options);
 
   if (!product) {
@@ -43,13 +76,12 @@ export default async function ProductPage(props: { params: paramsType }) {
       </Link>
       <div className="flex flex-col lg:flex-row items-center lg:items-center relative">
         <div className="w-full lg:w-1/2 mt-10">
-          {/* Category title and product title for small screens */}
           <div className="block lg:hidden">
             <p className="italic oswald text-gray-500">{product.category.title}</p>
             <h1 className="text-4xl uppercase font-bold titles">{product.title}</h1>
-            <div className="flex align-center">
-            <p className="oswald text-2xl mb-4 text-gray-700">${product.price} - {product.category.categoryDeal}</p>
-            </div>
+            <p className="oswald text-2xl mb-4 text-gray-700">
+              ${product.price} - {product.category.categoryDeal}
+            </p>
           </div>
           {product.imageUrl && (
             <Image
@@ -62,26 +94,24 @@ export default async function ProductPage(props: { params: paramsType }) {
           )}
         </div>
         <div className="w-full lg:w-1/2 mt-5 lg:mt-0">
-          {/* Category title and product title for large screens */}
           <div className="hidden lg:block relative">
             <p className="italic oswald text-gray-500">{product.category.title}</p>
             <h1 className="text-4xl uppercase font-bold titles">{product.title}</h1>
-            <p className="oswald text-2xl mb-4 text-gray-700">${product.price} - {product.additionalInfo?.productDeal ? product.additionalInfo.productDeal : product.category.categoryDeal}</p>
+            <p className="oswald text-2xl mb-4 text-gray-700">
+              ${product.price} - {product.additionalInfo?.productDeal || product.category.categoryDeal}
+            </p>
           </div>
-          {product.additionalInfo?.strain ? (
+          {product.additionalInfo?.strain && (
             <p
               className={
-                product?.additionalInfo.strain === "Sativa"
+                product.additionalInfo.strain === "Sativa"
                   ? "bg-yellow-500 text-white p-1.5 w-min rounded font-bold oswald uppercase"
                   : "bg-purple-500 text-white p-1.5 w-min rounded font-bold oswald uppercase"
               }
             >
-              {product?.additionalInfo.strain}
+              {product.additionalInfo.strain}
             </p>
-          ) : (
-            <span className="hidden"></span>
           )}
-          {/* Safely render the description */}
           <div dangerouslySetInnerHTML={{ __html: product.description }} className="product-description mt-10" />
         </div>
       </div>

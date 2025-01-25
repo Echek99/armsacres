@@ -3,11 +3,13 @@ import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
+import { Metadata } from "next";
 
 const options = { next: { revalidate: 3600 } };
-export type paramsType = Promise<{ slug: string }>;
 
-export default async function BlogPostPage( props : {params: paramsType}) {
+export type paramsType = { slug: string };
+
+export async function generateMetadata({ params }: { params: paramsType }): Promise<Metadata> {
   const query = `*[_type == "blog" && slug.current == $slug][0]{
     _id,
     title,
@@ -26,10 +28,59 @@ export default async function BlogPostPage( props : {params: paramsType}) {
       }
     }
   }`;
-  const {slug} = await props.params
 
+  const blog = await client.fetch<SanityDocument>(query, { slug: params.slug }, options);
 
-  const blog = await client.fetch<SanityDocument>(query, { slug: slug }, options);
+  if (!blog) {
+    return {
+      title: "Blog Post Not Found | Armsacres",
+      description: "This blog post does not exist or is unavailable at the moment.",
+    };
+  }
+
+  const description = blog.text
+    ? blog.text.map((block: any) => block.children.map((child: any) => child.text).join("")).join(" ").substring(0, 150) + "..."
+    : "Discover our latest blog posts on cannabis products and delivery services.";
+
+  return {
+    title: `${blog.title} | Armsacres`,
+    description,
+    openGraph: {
+      title: `${blog.title} | Armsacres`,
+      description,
+      images: [
+        {
+          url: blog.imageUrl,
+          width: 800,
+          height: 600,
+          alt: blog.title,
+        },
+      ],
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: { params: paramsType }) {
+  const query = `*[_type == "blog" && slug.current == $slug][0]{
+    _id,
+    title,
+    author,
+    "publishedAt": coalesce(publishedAt, _createdAt),
+    slug,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt,
+    text[] {
+      ...,
+      markDefs[] {
+        ...,
+        _type == "link" => {
+          "href": @.href
+        }
+      }
+    }
+  }`;
+
+  const blog = await client.fetch<SanityDocument>(query, { slug: params.slug }, options);
 
   if (!blog) {
     return <div className="text-center text-xl mt-10">Blog post not found</div>;
@@ -59,10 +110,9 @@ export default async function BlogPostPage( props : {params: paramsType}) {
           )}
         </div>
         <div className="w-full lg:w-1/2 mt-5 lg:mt-0">
-          <h1 className="text-4xl font-bold mb-4 oswald">{blog.title}</h1>
-          <p className="text-gray-600 mb-2">By {blog.author}</p>
-          <p className="text-gray-500 text-sm mb-4">Published on {formattedDate}</p>
-          <PortableText value={blog.text} />
+          <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>
+          <p className="text-gray-600 mb-4">By {blog.author} on {formattedDate}</p>
+          <PortableText value={blog.text}/>
         </div>
       </div>
     </div>
