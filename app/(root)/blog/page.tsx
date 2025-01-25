@@ -4,42 +4,8 @@ import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
 import { toPlainText } from '@portabletext/react';
-import { Metadata } from "next";
 
 const options = { next: { revalidate: 3600 } };
-
-export async function generateMetadata(): Promise<Metadata> {
-  const blog = await client.fetch<SanityDocument[]>(BLOG_QUERY, {}, options);
-
-  if (!blog || blog.length === 0) {
-    return {
-      title: "Blog Posts | Armsacres",
-      description: "Discover our latest blog posts on cannabis products and delivery services.",
-    };
-  }
-
-  const latestPost = blog[0];
-  const description = latestPost.text
-    ? toPlainText(latestPost.text).substring(0, 150) + "..."
-    : "Discover our latest blog posts on cannabis products and delivery services.";
-
-  return {
-    title: "Blog Posts | Armsacres",
-    description,
-    openGraph: {
-      title: "Blog Posts | Armsacres",
-      description,
-      images: [
-        {
-          url: latestPost.imageUrl,
-          width: 800,
-          height: 600,
-          alt: latestPost.title,
-        },
-      ],
-    },
-  };
-}
 
 const page = async () => {
   const blog = await client.fetch<SanityDocument[]>(BLOG_QUERY, {}, options);

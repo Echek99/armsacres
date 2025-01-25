@@ -9,9 +9,10 @@ const options = { next: { revalidate: 3600 } };
 export type paramsType = { slug: string };
 
 // **1. Define Metadata Function**
-export async function generateMetadata({ params }: { params: paramsType }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<paramsType> }): Promise<Metadata> {
+    const resolvedParams = await params;
     const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
-    const category = categories.find((e) => e.slug.current === params.slug);
+    const category = categories.find((e) => e.slug.current === resolvedParams.slug);
 
     if (!category) {
         return {
@@ -39,10 +40,11 @@ export async function generateMetadata({ params }: { params: paramsType }): Prom
 }
 
 // **2. Define the Page Component**
-const page = async ({ params }: { params: paramsType }) => {
+const page = async ({ params }: { params: Promise<paramsType> }) => {
+    const resolvedParams = await params;
     const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
     const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);
-    const { slug } = params;
+    const { slug } = resolvedParams;
 
     const category = categories.find((e) => e.slug.current === slug);
 

@@ -32,7 +32,6 @@ const FeaturedProducts = async () => {
 
                 // Take only the newest 5 products for this category
                 const newestCategoryProducts = sortedCategoryProducts.slice(0, 6);
-
                 return (
                     <div key={category.toLocaleLowerCase()} className="my-10">
                         <h3 className="font-semibold mb-3 titles uppercase text-4xl underline">{category}</h3>
