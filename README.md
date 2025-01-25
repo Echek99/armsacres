@@ -52,8 +52,6 @@ Product Page
 
 For questions, feedback, or inquiries:
 
-+1 (347) 935-4383
-
 Website: www.armsacres.io
 
 Thank you for choosing Armsacres, where quality meets convenience. 🌿
