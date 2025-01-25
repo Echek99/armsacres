@@ -2,7 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
-import { PortableText } from "@portabletext/react";
+import { PortableText, toPlainText } from "@portabletext/react";
 import { Metadata } from "next";
 
 const options = { next: { revalidate: 3600 } };
@@ -38,9 +38,8 @@ export async function generateMetadata({ params }: { params: paramsType }): Prom
     };
   }
 
-  const description = blog.text
-    ? blog.text.map((block: any) => block.children.map((child: any) => child.text).join("")).join(" ").substring(0, 150) + "..."
-    : "Discover our latest blog posts on cannabis products and delivery services.";
+  const plainText = toPlainText(blog.text);
+  const description = plainText.length > 150 ? plainText.substring(0, 150) + "..." : plainText;
 
   return {
     title: `${blog.title} | Armsacres`,
@@ -110,9 +109,10 @@ export default async function BlogPostPage({ params }: { params: paramsType }) {
           )}
         </div>
         <div className="w-full lg:w-1/2 mt-5 lg:mt-0">
-          <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>
-          <p className="text-gray-600 mb-4">By {blog.author} on {formattedDate}</p>
-          <PortableText value={blog.text}/>
+          <h1 className="text-4xl font-bold mb-4 oswald">{blog.title}</h1>
+          <p className="text-gray-600 mb-2">By {blog.author}</p>
+          <p className="text-gray-500 text-sm mb-4">Published on {formattedDate}</p>
+          <PortableText value={blog.text} />
         </div>
       </div>
     </div>
