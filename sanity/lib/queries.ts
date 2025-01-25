@@ -23,7 +23,10 @@ export const PRODUCTS_QUERY = defineQuery(`
       categoryDeal
     },
     description,
-    additionalInfo
+    additionalInfo{
+      strain,
+      productDeal
+    },
   }
 `)
 

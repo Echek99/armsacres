@@ -63,6 +63,11 @@ export const product = defineType({
             type: 'string',
             title: 'Strain',
           }),
+          defineField({
+            name: 'productDeal',
+            type: 'string',
+            title: 'ProductDeal',
+          }),
         ],
       }),
   ],

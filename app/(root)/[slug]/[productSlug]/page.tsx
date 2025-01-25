@@ -3,7 +3,7 @@ import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import Image from "next/image";
 
-const options = { next: { revalidate: 30 } };
+const options = { next: { revalidate: 3600 } };
 
 // Explicitly define the type for dynamic route params
 export type paramsType = Promise<{ productSlug: string }>;
@@ -20,7 +20,10 @@ const query = `*[_type == "product" && slug.current == $slug][0]{
       categoryDeal
     },
     description,
-    additionalInfo,
+    additionalInfo{
+      strain,
+      productDeal
+    },
 }`;
 
 export default async function ProductPage(props: { params: paramsType }) {
@@ -63,9 +66,9 @@ export default async function ProductPage(props: { params: paramsType }) {
           <div className="hidden lg:block relative">
             <p className="italic oswald text-gray-500">{product.category.title}</p>
             <h1 className="text-4xl uppercase font-bold titles">{product.title}</h1>
-            <p className="oswald text-2xl mb-4 text-gray-700">${product.price} - {product.category.categoryDeal}</p>
+            <p className="oswald text-2xl mb-4 text-gray-700">${product.price} - {product.additionalInfo?.productDeal ? product.additionalInfo.productDeal : product.category.categoryDeal}</p>
           </div>
-          {product.additionalInfo ? (
+          {product.additionalInfo?.strain ? (
             <p
               className={
                 product?.additionalInfo.strain === "Sativa"
@@ -76,7 +79,7 @@ export default async function ProductPage(props: { params: paramsType }) {
               {product?.additionalInfo.strain}
             </p>
           ) : (
-            <></>
+            <span className="hidden"></span>
           )}
           {/* Safely render the description */}
           <div dangerouslySetInnerHTML={{ __html: product.description }} className="product-description mt-10" />

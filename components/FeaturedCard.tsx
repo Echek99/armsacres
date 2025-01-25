@@ -25,9 +25,9 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ product, imgSize }) => {
                         {product.title}
                     </Link>
 
-                    {product.additionalInfo ?
+                    {product.additionalInfo?.strain ?
                         <p className={
-                            product.additionalInfo.strain === 'Sativa' ?
+                            product.additionalInfo?.strain === 'Sativa' ?
                                 'bg-yellow-500 text-white p-1.5 w-min rounded font-bold absolute right-5 top-5 z-0 oswald'
                                 :
                                 'bg-purple-500 text-white p-1.5 w-min rounded font-bold absolute right-5 top-5 z-0 oswald'
