@@ -98,7 +98,7 @@ export default async function ProductPage({ params }: { params: Promise<paramsTy
             <p className="italic oswald text-gray-500">{product.category.title}</p>
             <h1 className="text-4xl uppercase font-bold titles">{product.title}</h1>
             <p className="oswald text-2xl mb-4 text-gray-700">
-              ${product.price} - {product.additionalInfo.productDeal ? product.additionalInfo.productDeal : product.category.categoryDeal}
+              ${product.price} - {product.additionalInfo?.productDeal ? product.additionalInfo.productDeal : product.category.categoryDeal}
             </p>
           </div>
           {product.additionalInfo?.strain && (
