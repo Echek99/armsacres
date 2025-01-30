@@ -1,4 +1,3 @@
-import { ShoppingCart } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 import Link from "next/link"
@@ -24,13 +23,26 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ product, imgSize }) => {
                         />
                         {product.title}
                     </Link>
-
+                    {product.category.categoryDeal ? (
+                        <p className="uppercase text-base break-normal lg:max-w-[70%] md:max-w-[80%] max-w-[90%]">
+                            {`${product.category.categoryDeal}`}
+                        </p>
+                    ) : (
+                        <></>
+                    )}
+                    {product.additionalInfo?.productDeal ? (
+                        <p className="uppercase text-base lg:text-lg" >
+                            {`X${product.additionalInfo?.productDeal}`}
+                        </p>
+                    ) : (
+                        <></>
+                    )}
                     {product.additionalInfo?.strain ?
                         <p className={
                             product.additionalInfo?.strain === 'Sativa' ?
-                                'bg-yellow-500 text-white p-1.5 w-min rounded font-bold absolute right-5 top-5 z-0 oswald'
+                                'bg-yellow-500 text-white p-1.5 w-min rounded font-bold absolute right-5 bottom-5 z-0 oswald'
                                 :
-                                'bg-purple-500 text-white p-1.5 w-min rounded font-bold absolute right-5 top-5 z-0 oswald'
+                                'bg-purple-500 text-white p-1.5 w-min rounded font-bold absolute right-5 bottom-5 z-0 oswald'
                         }>
                             {product.additionalInfo.strain}
                         </p>
@@ -38,13 +50,9 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({ product, imgSize }) => {
                         <></>
                     }
                     <p className="text-md text-gray-500">{product.category.title}</p>
-                    <p className="text-lg">${product.price}</p>
+                    <p className="text-lg price">${product.price}</p>
                 </CardContent>
             </Card>
-            <ShoppingCart
-                size={40}
-                className="border-2 border-black rounded-3xl px-2 hover:text-green-700 cursor-pointer absolute right-5 bottom-5"
-            />
         </div>
     )
 }

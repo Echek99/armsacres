@@ -19,6 +19,9 @@
 }
 
 @layer utilities {
+  .price {
+    font-family: Arial, Helvetica, sans-serif;
+  }
   .titles {
     font-family: 'Mercadillo';
     -webkit-text-stroke: #000 2px;
