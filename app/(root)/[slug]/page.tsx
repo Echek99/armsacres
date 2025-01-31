@@ -9,8 +9,35 @@ const options = { next: { revalidate: 30 } };
 const ITEMS_PER_PAGE = 12;
 export type paramsType = { slug: string };
 
-// ... keep the generateMetadata function the same ...
+export async function generateMetadata({ params }: { params: paramsType }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
+    const category = categories.find((e) => e.slug.current === resolvedParams.slug);
 
+    if (!category) {
+        return {
+            title: "Category Not Found | Armsacres",
+            description: "The requested category does not exist.",
+        };
+    }
+
+    return {
+        title: `${category.title} | Armsacres`,
+        description: category.description || `Discover top products in ${category.title}.`,
+        openGraph: {
+            title: `${category.title} | Armsacres`,
+            description: category.description || `Explore premium products in ${category.title}.`,
+            images: [
+                {
+                    url: category.imageUrl, // Ensure image field exists
+                    width: 1200,
+                    height: 630,
+                    alt: category.title,
+                },
+            ],
+        },
+    };
+}
 const page = async ({
     params,
     searchParams
@@ -65,7 +92,7 @@ const page = async ({
         const pages = [];
         const maxVisiblePages = 5;
         let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+        const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
         if (endPage - startPage < maxVisiblePages - 1) {
             startPage = Math.max(1, endPage - maxVisiblePages + 1);

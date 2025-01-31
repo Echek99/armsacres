@@ -56,4 +56,4 @@ const FeaturedProducts = async () => {
     );
 };
 
-export default FeaturedProducts;``
+export default FeaturedProducts;
