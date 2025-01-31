@@ -35,6 +35,13 @@ const FeaturedProducts = async () => {
                 return (
                     <div key={category.toLocaleLowerCase()} className="my-10">
                         <h3 className="font-semibold mb-3 titles uppercase text-4xl underline">{category}</h3>
+                        {category=== 'Ounces' || category === 'Eighths' ?
+                            <p className="font-bold oswald uppercase mt-2">
+                                Available strains may vary weekly; stock is approximate.
+                            </p>
+                            :
+                            null
+                        }
                         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                             {newestCategoryProducts.map((product) => (
                                 <div key={product._id} className="flex flex-col">
@@ -49,4 +56,4 @@ const FeaturedProducts = async () => {
     );
 };
 
-export default FeaturedProducts;
+export default FeaturedProducts;``

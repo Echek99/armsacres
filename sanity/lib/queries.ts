@@ -27,6 +27,7 @@ export const PRODUCTS_QUERY = defineQuery(`
       strain,
       productDeal
     },
+    _createdAt
   }
 `)
 
@@ -71,17 +72,21 @@ export const BLOG_QUERY_BY_SLUG = `
 export const EIGHTHS_OUNCES_QUERY = defineQuery(`
 *[_type == "product" && category->title in ["Eighths", "Ounces"]]
   | order(_createdAt desc)[0...12] {
-    _id,
     title,
     slug,
     "imageUrl": image.asset->url,
     price,
     category->{
       slug,
-      title
+      title,
+      categoryDeal
     },
     description,
-    additionalInfo
+    additionalInfo{
+      strain,
+      productDeal
+    },
+    _createdAt
   }
 `)
 

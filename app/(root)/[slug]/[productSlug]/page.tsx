@@ -22,6 +22,7 @@ const query = `*[_type == "product" && slug.current == $slug][0]{
       strain,
       productDeal
     },
+    _createdAt
 }`;
 
 // Explicitly define the type for dynamic route params
