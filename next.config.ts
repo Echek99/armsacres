@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
         destination: "/blog",
         permanent: true, // 301 Redirect
       },
+      {
+        source: "/product/:path*", // Matches any URL under /product/
+        destination: "/", // Redirects to homepage
+        permanent: true, // 301 redirect (SEO-friendly)
+      },
       // Add more redirects here if needed
     ];
   },
