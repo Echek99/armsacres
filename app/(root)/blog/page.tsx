@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { toPlainText } from '@portabletext/react';
 
-const options = { next: { revalidate: 3600 } };
+const options = { next: { revalidate: 1800 } };
 
 const page = async () => {
   const blog = await client.fetch<SanityDocument[]>(BLOG_QUERY, {}, options);

@@ -12,7 +12,7 @@ import { EIGHTHS_OUNCES_QUERY } from "@/sanity/lib/queries";
 import { type SanityDocument } from "next-sanity";
 
 
-const options = { next: { revalidate: 3600 } };
+const options = { next: { revalidate: 1800 } };
 
 const NewStrainsCarousel = async () => {
 

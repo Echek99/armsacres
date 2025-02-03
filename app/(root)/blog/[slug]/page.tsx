@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 
-const options = { next: { revalidate: 3600 } };
+const options = { next: { revalidate: 1800 } };
 export type paramsType = Promise<{ slug: string }>;
 
 export default async function BlogPostPage( props : {params: paramsType}) {

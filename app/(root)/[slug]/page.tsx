@@ -5,7 +5,7 @@ import Link from "next/link";
 import FeaturedCard from "@/components/FeaturedCard";
 import { Metadata } from "next";
 
-const options = { next: { revalidate: 3600 } };
+const options = { next: { revalidate: 1800 } };
 export type paramsType = { slug: string };
 
 // **1. Define Metadata Function**

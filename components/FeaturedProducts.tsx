@@ -3,7 +3,7 @@ import { client } from "@/sanity/lib/client";
 import { PRODUCTS_QUERY } from "@/sanity/lib/queries";
 import { type SanityDocument } from "next-sanity";
 
-const options = { next: { revalidate: 3600 } };
+const options = { next: { revalidate: 1800 } };
 
 const FeaturedProducts = async () => {
     const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);

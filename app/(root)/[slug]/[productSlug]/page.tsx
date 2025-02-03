@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
 
-const options = { next: { revalidate: 3600 } };
+const options = { next: { revalidate: 1800 } };
 
 // Define the query to fetch a single product by its slug
 const query = `*[_type == "product" && slug.current == $slug][0]{
