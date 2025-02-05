@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/home",
+        destination: "/",
+        permanent: true, // 301 Redirect
+      },
+      {
         source: "/armsacres-edibles-thc-infused-edibles-nyc-delivery",
         destination: "/edibles",
         permanent: true, // 301 Redirect
@@ -48,7 +53,46 @@ const nextConfig: NextConfig = {
         destination: "/", // Redirects to homepage
         permanent: true, // 301 redirect (SEO-friendly)
       },
-      // Add more redirects here if needed
+      {
+        source: "/eights-weed-delivery-nyc-free-delivery-24-7/",
+        destination: "/eighths",
+        permanent: true,
+      },
+      {
+        source: "/pre-rolls-weed-delivery-nyc-free-delivery-24-7/",
+        destination: "/pre-rolls",
+        permanent: true,
+      },
+      {
+        source: "/product/bubblegum-gelato-buy-2-or-more-pay-30-each/",
+        destination: "/eighths/bubblegum-gelato",
+        permanent: true,
+      },
+      {
+        source: "/product-category/vape/page/1/",
+        destination: "/vapes",
+        permanent: true,
+      },
+      {
+        source: "/product-category/edibles/page/1/",
+        destination: "/edibles",
+        permanent: true,
+      },
+      {
+        source: "/product-category/pre-rolls/page/1/",
+        destination: "/pre-rolls",
+        permanent: true,
+      },
+      {
+        source: "/shop-2/",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/blog-2/",
+        destination: "/blog",
+        permanent: true,
+      },
     ];
   },
 };
