@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const NewProductSection = () => {
     return (
         <section className="py-12 px-6 text-center">
@@ -10,10 +12,12 @@ const NewProductSection = () => {
                     Get ready for the next level of vaping. The <span className="font-semibold">Fryd 2G Donut</span> is on its way! Stay tuned for the drop.
                 </p>
                 <div className="flex justify-center">
-                    <img
+                    <Image
                         src="/fryddonutsbanner.png"
                         alt="Fryd 2G Donut Coming Soon"
                         className="w-full max-w-md rounded-lg shadow-lg"
+                        height={315}
+                        width={600}
                     />
                 </div>
             </div>

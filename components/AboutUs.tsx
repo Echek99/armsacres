@@ -13,7 +13,7 @@ const AboutUs = () => {
                     <strong> cannabis products</strong>. Our collection features a wide selection of high-quality 
                     <strong>strains</strong>, ensuring you get the perfect choice for any occasion. <br />
                     Every product is carefully selected and tested for <strong>potency and purity</strong>, 
-                    guaranteeing the best experience possible. Whether you're in <strong>Manhattan, Brooklyn, Queens, 
+                    guaranteeing the best experience possible. Whether you&lsquo;`re in <strong>Manhattan, Brooklyn, Queens, 
                     or anywhere in NJ</strong>, enjoy the ease and convenience of having <strong>exceptional weed</strong> 
                     delivered straight to your door. <br />
                     <strong>Armsacres</strong> is where <strong>quality and convenience</strong> meet—your go-to 
