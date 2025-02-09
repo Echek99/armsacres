@@ -8,7 +8,6 @@ import { Metadata } from "next";
 const options = { next: { revalidate: 1800 } };
 export type paramsType = { slug: string };
 
-// **1. Define Metadata Function**
 export async function generateMetadata({ params }: { params: Promise<paramsType> }): Promise<Metadata> {
     const resolvedParams = await params;
     const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
@@ -29,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<paramsType>
             description: category.description || `Explore premium products in ${category.title}.`,
             images: [
                 {
-                    url: category.imageUrl, // Ensure image field exists
+                    url: category.imageUrl,
                     width: 1200,
                     height: 630,
                     alt: category.title,
@@ -39,8 +38,15 @@ export async function generateMetadata({ params }: { params: Promise<paramsType>
     };
 }
 
-// **2. Define the Page Component**
-const page = async ({ params }: { params: Promise<paramsType> }) => {
+const PRODUCTS_PER_PAGE = 12;
+
+const page = async ({
+    params,
+    searchParams,
+}: {
+    params: Promise<paramsType>;
+    searchParams: { page?: string };
+}) => {
     const resolvedParams = await params;
     const categories = await client.fetch<SanityDocument[]>(CATEGORIES_QUERY, {}, options);
     const products = await client.fetch<SanityDocument[]>(PRODUCTS_QUERY, {}, options);
@@ -64,17 +70,15 @@ const page = async ({ params }: { params: Promise<paramsType> }) => {
     );
 
     // Sort products by _createdAt (newest first)
-    const sortedByCreatedAt = [...filteredProducts].sort((a, b) => 
+    const sortedProducts = [...filteredProducts].sort((a, b) =>
         new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()
     );
 
-    // Sort products by _updatedAt (most recently updated first)
-    // const sortedByUpdatedAt = [...filteredProducts].sort((a, b) => 
-        // new Date(b._updatedAt).getTime() - new Date(a._updatedAt).getTime()
-    // );
-
-    // Choose which sorting to use (e.g., sortedByCreatedAt or sortedByUpdatedAt)
-    const sortedProducts = sortedByCreatedAt; // or sortedByUpdatedAt
+    // Pagination Logic
+    const currentPage = parseInt(searchParams?.page || "1", 10);
+    const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    const endIndex = startIndex + PRODUCTS_PER_PAGE;
+    const paginatedProducts = sortedProducts.slice(startIndex, endIndex);
 
     return (
         <div className="container mx-auto min-h-screen p-8 flex flex-col gap-4">
@@ -87,9 +91,23 @@ const page = async ({ params }: { params: Promise<paramsType> }) => {
                 <p>{category.categoryDeal}</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                {sortedProducts.map((product) => (
-                    <FeaturedCard key={product._id} product={product} imgSize={300}/>
+                {paginatedProducts.map((product) => (
+                    <FeaturedCard key={product._id} product={product} imgSize={300} />
                 ))}
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-6 gap-4">
+                {currentPage > 1 && (
+                    <Link href={`/${slug}?page=${currentPage - 1}`} className="px-4 py-2 bg-gray-200 rounded">
+                       ← Previous Page
+                    </Link>
+                )}
+                {endIndex < sortedProducts.length && (
+                    <Link href={`/${slug}?page=${currentPage + 1}`} className="px-4 py-2 bg-gray-200 rounded">
+                        Next Page →
+                    </Link>
+                )}
             </div>
         </div>
     );

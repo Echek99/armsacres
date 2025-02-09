@@ -53,6 +53,9 @@ const NavBar = () => {
                         <Link href="/pre-rolls" className="text-xl links">
                             Pre-Rolls
                         </Link>
+                        <Link href="/wax" className="text-xl links">
+                            Wax
+                        </Link>
                         <Link href="/blog" className="text-xl links">
                             Blog
                         </Link>

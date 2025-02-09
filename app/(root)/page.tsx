@@ -7,6 +7,7 @@ import FeaturedProducts from "@/components/FeaturedProducts";
 import AboutUs from "@/components/AboutUs";
 import Places from "@/components/Places";
 import { SanityLive } from "@/sanity/lib/live";
+import NewProductSection from "@/components/NewProductSection";
 
 export default function Home() {
   return (
@@ -26,10 +27,11 @@ export default function Home() {
       <section className="flex flex-col items-center">
         <Qualities /> 
         <Categories />
-        <ReferralProgram />
+        <NewProductSection />
         <NewStrainsCarousel />
-        <AboutUs />
+        <ReferralProgram />
         <FeaturedProducts />
+        <AboutUs />
         <Places />
         <SanityLive />
       </section>

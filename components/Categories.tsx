@@ -14,7 +14,7 @@ export default async function Categories() {
     return (
         <div className="container mx-auto p-8 flex flex-col gap-4">
             <h3 className="text-5xl underline titles text-center">MENU</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
                 {categories.map((category) => {
                     return (
                         <div key={category._id} className="text-center mx-auto ml-auto">
