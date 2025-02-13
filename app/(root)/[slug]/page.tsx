@@ -5,7 +5,7 @@ import Link from "next/link";
 import FeaturedCard from "@/components/FeaturedCard";
 import { Metadata } from "next";
 
-const options = { next: { revalidate: 1800 } };
+const options = { next: { revalidate: 30 } };
 export type paramsType = { slug: string };
 
 // **1. Define Metadata Function**
@@ -64,13 +64,13 @@ const page = async ({ params }: { params: Promise<paramsType> }) => {
     );
 
     // Sort products by _createdAt (newest first)
-    const sortedByCreatedAt = [...filteredProducts].sort((a, b) => 
+    const sortedByCreatedAt = [...filteredProducts].sort((a, b) =>
         new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()
     );
 
     // Sort products by _updatedAt (most recently updated first)
     // const sortedByUpdatedAt = [...filteredProducts].sort((a, b) => 
-        // new Date(b._updatedAt).getTime() - new Date(a._updatedAt).getTime()
+    // new Date(b._updatedAt).getTime() - new Date(a._updatedAt).getTime()
     // );
 
     // Choose which sorting to use (e.g., sortedByCreatedAt or sortedByUpdatedAt)
@@ -85,10 +85,17 @@ const page = async ({ params }: { params: Promise<paramsType> }) => {
                 <h1 className="text-5xl font-bold uppercase titles mt-5 mb-2">{category.title}</h1>
                 <p>{category.description}</p>
                 <p>{category.categoryDeal}</p>
+                <p className="font-bold oswald uppercase mt-2">
+                    {category.title === "Eighths" || category.title === "Ounces" ?
+                    'Available strains may vary weekly; stock is approximate.'
+                        :
+                        ''
+                    }
+                </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {sortedProducts.map((product) => (
-                    <FeaturedCard key={product._id} product={product} imgSize={300}/>
+                    <FeaturedCard key={product._id} product={product} imgSize={300} />
                 ))}
             </div>
         </div>
